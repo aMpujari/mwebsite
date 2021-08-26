@@ -14,6 +14,7 @@ class MWEBSITE_THEME {
     protected function __construct() {
      // Load classes
      Assets::get_instance();
+     Menus::get_instance();
      $this->set_hooks();
     }
 
@@ -33,7 +34,28 @@ class MWEBSITE_THEME {
     'unlink-homepage-logo' => true,
     ) );
 
-     add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ) );
+    $customBackgroundArgs = array(
+        'default-color' => '#fff',
+        'default-image' => '',
+        'default-repeat'=> 'no-repeat'
+    );
+    add_theme_support( 'custom-background', $customBackgroundArgs );
+
+
+    add_theme_support('post-thumbnails');
+
+    add_theme_support('automatic-feed-links');
+
+    add_theme_support('html5', [ 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ] );
+
+    add_editor_style(); // ??
+
+    add_theme_support('align-wide');
+
+    global $content_width;
+    if(!isset($content_width)) {
+    $content_width = 1240;    
+    }
 
     }
 
