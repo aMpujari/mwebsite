@@ -15,6 +15,9 @@ class MWEBSITE_THEME {
      // Load classes
      Assets::get_instance();
      Menus::get_instance();
+     Meta_Boxes::get_instance();
+     Sidebars::get_instance();
+
      $this->set_hooks();
     }
 
@@ -51,6 +54,11 @@ class MWEBSITE_THEME {
     add_editor_style(); // ??
 
     add_theme_support('align-wide');
+
+    /*
+    * register image size 
+    */
+    add_image_size('featured-thumbnail', 350, 233, true);
 
     global $content_width;
     if(!isset($content_width)) {

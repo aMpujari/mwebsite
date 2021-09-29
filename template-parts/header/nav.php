@@ -14,7 +14,7 @@ $header_menus = wp_get_nav_menu_items($header_menu_id);
 
 ?>
 <nav class="navbar navbar-default">
-<div class="container-fluid">
+<div class="container">
 <!-- Brand and toggle get grouped for better mobile display -->
 <div class="navbar-header">
 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -44,9 +44,29 @@ if(!empty($header_menus) && is_array($header_menus)){
 <?php
 foreach($header_menus as $menu_item){
 if(! $menu_item->menu_item_parent ){
+$child_menu_items = $menu_class->get_child_menu_items($header_menus, $menu_item->ID);   
+$has_children = ! empty($child_menu_items) && is_array($child_menu_items);
+if(!$has_children){
 ?>
-
+<li class="nav-item"><a href="<?php  echo esc_url($menu_item->url); ?>"><?php echo esc_html($menu_item->title); ?></a></li>
 <?php
+} else {
+?>
+<li class="nav-item dropdown">
+<a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="<?php  echo esc_url($menu_item->url); ?>" ><?php echo esc_html($menu_item->title); ?> <span class="caret"></span></a>
+<ul class="dropdown-menu">
+<?php
+foreach($child_menu_items as $child_menu)
+{
+?>
+<li><a href="<?php  echo esc_url($child_menu->url); ?>"><?php echo esc_html($child_menu->title); ?></a></li>
+<?php
+}
+?>
+</ul>
+</li>
+<?php
+}
 }
 }
 ?> 
@@ -61,19 +81,6 @@ if(! $menu_item->menu_item_parent ){
 </div>
 <button type="submit" class="btn btn-default">Submit</button>
 </form>
-<ul class="nav navbar-nav navbar-right">
-<li><a href="#">Link</a></li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="#">Action</a></li>
-<li><a href="#">Another action</a></li>
-<li><a href="#">Something else here</a></li>
-<li role="separator" class="divider"></li>
-<li><a href="#">Separated link</a></li>
-</ul>
-</li>
-</ul>
 </div><!-- /.navbar-collapse -->
 </div><!-- /.container-fluid -->
 </nav>
@@ -86,12 +93,6 @@ if(! $menu_item->menu_item_parent ){
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 <ul class="dropdown-menu">
 <li><a href="#">Action</a></li>
-<li><a href="#">Another action</a></li>
-<li><a href="#">Something else here</a></li>
-<li role="separator" class="divider"></li>
-<li><a href="#">Separated link</a></li>
-<li role="separator" class="divider"></li>
-<li><a href="#">One more separated link</a></li>
 </ul>
 </li>
 </ul>

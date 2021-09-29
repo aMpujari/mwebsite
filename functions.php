@@ -13,6 +13,7 @@ if (!defined( 'MWEBSITE_DIR_URI')) {
 }
 
 require_once MWEBSITE_DIR_PATH . '/inc/helpers/autoloader.php';
+require_once MWEBSITE_DIR_PATH . '/inc/helpers/template-tags.php';
 
 function mwebsite_theme_instance() {
 \MWEBSITE_THEME\Inc\MWEBSITE_THEME::get_instance();
@@ -26,3 +27,10 @@ echo '<!-- Google Tag Manager (noscript) --><noscript><iframe src="#" height="0"
 
 // Add Google Tag code which is supposed to be placed after opening body tag.
 add_action( 'wp_body_open', 'wpdoc_add_custom_body_open_code' );
+
+
+function mwebsite_post_formats(){
+	add_theme_support('post-formats',array('aside','gallery'));
+}
+
+add_action('after_setup_theme','mwebsite_post_formats');
